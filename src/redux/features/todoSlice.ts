@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type TTodo = {
+export type TTodo = {
   id: string;
   title: string;
   desc: string;
@@ -23,7 +23,11 @@ const todoSlice = createSlice({
     addTodo: (state, action: PayloadAction<TTodo>) => {
       state.todos.push(action.payload);
     },
+    deleteTodo: (state, action: PayloadAction<string>) => {
+      console.log(action);
+      state.todos = state.todos.filter(todo => todo.id !== action.payload);
+    },
   },
 });
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, deleteTodo } = todoSlice.actions;
 export default todoSlice.reducer;

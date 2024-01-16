@@ -11,14 +11,12 @@ import {
 } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { useAppDispatch } from "@/redux/hooks";
 import { addTodo } from "@/redux/features/todoSlice";
 
 const AddTodoModal = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const state = useAppSelector(state => state.todos.todos);
-  console.log(state);
   const dispatch = useAppDispatch();
   const onSubmit = () => {
     const payload = {

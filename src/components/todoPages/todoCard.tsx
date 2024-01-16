@@ -1,16 +1,20 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "../ui/button";
+import { TTodo, deleteTodo } from "@/redux/features/todoSlice";
+import { useAppDispatch } from "@/redux/hooks";
 
-const TodoCard = () => {
+const TodoCard = ({ title, desc, id }: TTodo) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="flex border-b  border-opacity-10 border-slate-500 pb-4   justify-between text-gray-800 font-medium items-center">
       <Checkbox className="" />
 
-      <p>Todo Title</p>
+      <p>{title}</p>
       <p>Time</p>
-      <p>desc</p>
+      <p>{desc}</p>
       <div className="space-x-4">
-        <Button className="bg-red-500">
+        <Button onClick={() => dispatch(deleteTodo(id))} className="bg-red-500">
           <svg
             className="size-4"
             data-slot="icon"
