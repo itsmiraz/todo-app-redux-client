@@ -26,10 +26,8 @@ const AddTodoModal = () => {
   const [desc, setDesc] = useState("");
   const [priority, setpriority] = useState("");
   // const dispatch = useAppDispatch();
-  const [addTodo, { data, isLoading, isError, isSuccess }] =
-    useAddTodosMutation();
+  const [addTodo] = useAddTodosMutation();
 
-  console.log({ data, isLoading, isError, isSuccess });
   const onSubmit = () => {
     const payload = {
       id: Math.random().toString(36),
