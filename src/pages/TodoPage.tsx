@@ -1,10 +1,16 @@
 import AddTodoModal from "@/components/todoPages/addtodoModal";
 import TodoCard from "@/components/todoPages/todoCard";
 import TodoFilter from "@/components/todoPages/todoFilter";
-import { useAppSelector } from "@/redux/hooks";
+import { useGetTodosQuery } from "@/redux/apiServerice/apiService";
 
 const Todo = () => {
-  const { todos } = useAppSelector(state => state.todos);
+  //* From Local State
+  // const { todos } = useAppSelector(state => state.todos);
+
+  //* From Server
+  const { data: todos, isLoading } = useGetTodosQuery(undefined);
+
+  // console.log(todos);
 
   return (
     <div className="max-w-5xl rounded-lg p-4 mx-auto">
@@ -19,23 +25,31 @@ const Todo = () => {
 
       <div className="bg-primary-gradient rounded-lg p-[5px]">
         <div className="space-y-4 bg-slate-100 rounded-lg p-4">
-          {todos.length > 0 ? (
-            <>
-              {todos.map(todo => (
-                <TodoCard
-                  key={todo.id}
-                  title={todo.title}
-                  id={todo.id}
-                  isCompleted={todo.isCompleted}
-                  desc={todo.desc}
-                />
-              ))}
-            </>
+          {isLoading ? (
+            <p>Loading</p>
           ) : (
             <>
-              <p className="text-center font-medium text-xl my-8 text-primary">
-                You Don't have any todos
-              </p>
+              {todos?.data?.length > 0 ? (
+                <>
+                  {todos?.data?.map(todo => (
+                    <TodoCard
+                      _id={todo._id}
+                      priority={todo.priority}
+                      key={todo.id}
+                      title={todo.title}
+                      id={todo.id}
+                      isCompleted={todo.isCompleted}
+                      desc={todo.desc}
+                    />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <p className="text-center font-medium text-xl my-8 text-primary">
+                    You Don't have any todos
+                  </p>
+                </>
+              )}
             </>
           )}
         </div>

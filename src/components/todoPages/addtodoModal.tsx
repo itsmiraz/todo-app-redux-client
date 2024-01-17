@@ -9,23 +9,36 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+
 import { Input } from "../ui/input";
 import { Label } from "../ui/label";
-import { useAppDispatch } from "@/redux/hooks";
-import { addTodo } from "@/redux/features/todoSlice";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useAddTodosMutation } from "@/redux/apiServerice/apiService";
 
 const AddTodoModal = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const dispatch = useAppDispatch();
+  const [priority, setpriority] = useState("");
+  // const dispatch = useAppDispatch();
+  const [addTodo, { data, isLoading, isError, isSuccess }] =
+    useAddTodosMutation();
+
+  console.log({ data, isLoading, isError, isSuccess });
   const onSubmit = () => {
     const payload = {
       id: Math.random().toString(36),
       title,
       desc,
+      priority,
       isCompleted: false,
     };
-    dispatch(addTodo(payload));
+    addTodo(payload);
   };
   return (
     <Dialog>
@@ -58,6 +71,23 @@ const AddTodoModal = () => {
               id="desc"
               className="col-span-3"
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="desc" className="text-right">
+              Priority
+            </Label>
+            <div className="col-span-3">
+              <Select onValueChange={e => setpriority(e)}>
+                <SelectTrigger className="">
+                  <SelectValue placeholder="" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="0">High</SelectItem>
+                  <SelectItem value="1">Mid</SelectItem>
+                  <SelectItem value="2">Low</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
         </div>
         <DialogFooter>

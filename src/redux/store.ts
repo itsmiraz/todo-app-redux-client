@@ -6,6 +6,9 @@ export const store = configureStore({
     [baseApi.reducerPath]: baseApi.reducer,
     todos: TodoReducer,
   },
+
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(baseApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

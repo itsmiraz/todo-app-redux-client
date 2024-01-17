@@ -1,20 +1,19 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "../ui/button";
-import { TTodo, deleteTodo } from "@/redux/features/todoSlice";
-import { useAppDispatch } from "@/redux/hooks";
+import { TTodo } from "@/redux/features/todoSlice";
+import { useDeleteTodoMutation } from "@/redux/apiServerice/apiService";
 
-const TodoCard = ({ title, desc, id }: TTodo) => {
-  const dispatch = useAppDispatch();
-
+const TodoCard = ({ title, desc, priority, _id }: TTodo) => {
+  const [deletTodo] = useDeleteTodoMutation();
   return (
     <div className="flex border-b  border-opacity-10 border-slate-500 pb-4   justify-between text-gray-800 font-medium items-center">
       <Checkbox className="" />
 
       <p>{title}</p>
-      <p>Time</p>
+      <p>{priority}</p>
       <p>{desc}</p>
       <div className="space-x-4">
-        <Button onClick={() => dispatch(deleteTodo(id))} className="bg-red-500">
+        <Button onClick={() => deletTodo(_id)} className="bg-red-500">
           <svg
             className="size-4"
             data-slot="icon"
